@@ -24,10 +24,7 @@ public class exp4 {
 					StringBuilder bytestuffed = new StringBuilder();
 					bytestuffed.append("F");
 					for (int i = 0; i < input.length(); i++) {
-						if (input.charAt(i) == 'F') {
-							bytestuffed.append("E");
-						}
-						if (input.charAt(i) == 'E') {
+						if (input.charAt(i) == 'F' || input.charAt(i) == 'E') {
 							bytestuffed.append("E");
 						}
 						bytestuffed.append(input.charAt(i));
