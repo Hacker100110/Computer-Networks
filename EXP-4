@@ -1,104 +1,71 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class exp4 {
 
-    // 1) Char Count
-    public static String charCnt(String data) {
-        return data.length() + data;
-    }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		boolean x = true;
 
-    // 2) Bit Stuffing with detailed process output
-    public static String bitStuff(String data) {
-        StringBuilder stuffed = new StringBuilder();
-        int cnt = 0;
+		System.out.println("Enter the string: ");
+		String input = sc.nextLine();
 
-        System.out.println("Bit Stuffing:");
+		System.out.println("Menu: \n1.Character Count\n2.Byte stuffing\n3.Bit Stuffing\n4.Physical Data Violation\n5.Exit");
 
-        for (int i = 0; i < data.length(); i++) {
-            char bit = data.charAt(i);
+		while (x) {
+			System.out.print("Enter your choice: ");
+			int option = sc.nextInt();
 
-            if (bit == '1') {
-                cnt++;
-                stuffed.append(bit);
-                System.out.println("Bit " + (i + 1) + ": " + bit + " -> 1s cnt: " + cnt);
+			switch (option) {
+				case 1:
+					System.out.println(input.length() + input);
+					break;
 
-                if (cnt == 5) {
-                    stuffed.append('0'); // Stuff '0' after 5 '1's
-                    System.out.println("Insert '0' after 5 '1's");
-                    cnt = 0; // Reset cnt after stuffing
-                }
-            } else {
-                stuffed.append(bit);
-                System.out.println("Bit " + (i + 1) + ": " + bit + " -> 1s cnt reset to 0");
-                cnt = 0; // Reset cnt on '0'
-            }
-        }
-        return stuffed.toString();
-    }
+				case 2:
+					StringBuilder bytestuffed = new StringBuilder();
+					bytestuffed.append("F");
+					for (int i = 0; i < input.length(); i++) {
+						if (input.charAt(i) == 'F') {
+							bytestuffed.append("E");
+						}
+						if (input.charAt(i) == 'E') {
+							bytestuffed.append("E");
+						}
+						bytestuffed.append(input.charAt(i));
+					}
+					bytestuffed.append("F");
+					System.out.println(bytestuffed);
+					break;
 
-    // 3) Byte Stuffing
-    public static String byteStuff(String data, char flag, char esc) {
-        StringBuilder stuffed = new StringBuilder();
-        stuffed.append(flag); // Start flag
+				case 3:
+					StringBuilder bitstuffed = new StringBuilder();
+					int count = 0;
+					for (int i = 0; i < input.length(); i++) {
+						bitstuffed.append(input.charAt(i));
+						if (input.charAt(i) == '1') {
+							count++;
+						} else {
+							count = 0;
+						}
+						if (count == 5) {
+							bitstuffed.append("0");
+                                                        count = 0;
+						}
+					}
+					System.out.println(bitstuffed);
+					break;
 
-        for (char ch : data.toCharArray()) {
-            if (ch == flag || ch == esc) {
-                stuffed.append(esc); // Add esc before flag or esc chars
-            }
-            stuffed.append(ch);
-        }
+				case 4:
+					System.out.println(input + "01");
+					break;
 
-        stuffed.append(flag); // End flag
-        return stuffed.toString();
-    }
-
-    // 4) Phy Layer Coding Violation
-    public static String phyCodingViolation(String data) {
-        StringBuilder encoded = new StringBuilder();
-        for (char bit : data.toCharArray()) {
-            if (bit == '0') {
-                encoded.append("01"); // 0 -> Low-High
-            } else if (bit == '1') {
-                encoded.append("10"); // 1 -> High-Low
-            }
-        }
-        encoded.append("11"); // example violation
-        return encoded.toString();
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        // Char Count
-        System.out.println("Enter data for Char Count:");
-        String charData = sc.nextLine();
-        String charCntFrame = charCnt(charData);
-        System.out.println("Char Count Frame: " + charCntFrame);
-
-        // Bit Stuffing
-        System.out.println("\nEnter bin data for Bit Stuffing:");
-        String bitData = sc.nextLine();
-        String bitStuffFrame = bitStuff(bitData);
-        System.out.println("Final Bit Stuffed Frame: " + bitStuffFrame);
-
-        // Byte Stuffing
-        System.out.println("\nEnter data for Byte Stuffing:");
-        String byteData = sc.nextLine();
-        System.out.println("Enter flag char for Byte Stuffing:");
-        char flag = sc.next().charAt(0);
-        System.out.println("Enter esc char for Byte Stuffing:");
-        char esc = sc.next().charAt(0);
-        String byteStuffFrame = byteStuff(byteData, flag, esc);
-        System.out.println("Byte Stuffed Frame: " + byteStuffFrame);
-
-        sc.nextLine(); // Consume newline after esc input
-
-        // Phy Layer Coding Violation
-        System.out.println("\nEnter bin data for Phy Layer Coding Violation:");
-        String phyData = sc.nextLine();
-        String phyViolationFrame = phyCodingViolation(phyData);
-        System.out.println("Phy Layer Coding Violation Frame: " + phyViolationFrame);
-
-        sc.close();
-    }
+				case 5:
+					x = false;
+					break;
+				default:
+					System.out.println("Please enter a valid option!");
+					break;
+			}
+		}
+		sc.close();
+	}
 }
